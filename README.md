@@ -5,6 +5,22 @@ Right now it just provides your IP address by shelling out to `dig` and using Op
 This is exposed as the value `wan_ip_address` on a (data) resource, `network_info`.
 
 
+## Install
+
+First, use `go` to fetch and build:
+
+    go get github.com/chbrown/terraform-provider-network
+
+Then edit your `~/.terraformrc` to contain:
+
+    providers {
+      network = "/Your/absolute/expanded/GOPATH/bin/terraform-provider-network"
+    }
+
+Where the value of `network` is an absolute path to the `terraform-provider-network` binary that `go get` just built.
+Assuming you have the `GOPATH` environment variable set, this will be the value of `$GOPATH/bin/terraform-provider-network`.
+
+
 ## Example
 
     data "network_info" "main" { }
