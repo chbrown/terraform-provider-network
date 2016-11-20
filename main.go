@@ -2,10 +2,10 @@ package main
 
 import (
 	"bytes"
-	"os/exec"
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/plugin"
 	"github.com/hashicorp/terraform/terraform"
+	"os/exec"
 )
 
 func resolveIpAddress() (err error, ip_address string) {
@@ -22,7 +22,7 @@ func resource() *schema.Resource {
 		Read: resourceRead,
 		Schema: map[string]*schema.Schema{
 			"wan_ip_address": &schema.Schema{
-				Type: schema.TypeString,
+				Type:     schema.TypeString,
 				Computed: true,
 			},
 		},
