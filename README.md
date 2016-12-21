@@ -42,6 +42,20 @@ Assuming you have the `GOPATH` environment variable set, this will be the value 
     }
 
 
+## Debugging
+
+If you get the cryptic error message:
+
+    Error configuring: 1 error(s) occurred:
+
+    * Incompatible API version with plugin. Plugin version: 1, Ours: 2
+
+This means `terraform` has been updated to a version different from the libraries the plugin was built with.
+The solution is to reinstall, by using `go get` with the `-u` flag:
+
+    go get -u github.com/chbrown/terraform-provider-network
+
+
 ## References
 
 References for writing custom providers
