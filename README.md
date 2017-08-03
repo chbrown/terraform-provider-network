@@ -1,6 +1,8 @@
 ## terraform provider for network information
 
-Right now it just provides your IP address by shelling out to `dig` and using OpenDNS's resolvers to echo back your IP by requesting the `A` record for the special name `myip.opendns.com`.
+Right now it just provides your IP address by shelling out to `dig` and using OpenDNS's resolvers to echo back your IP by requesting the `A` record for the special name `myip.opendns.com`, exactly like:
+
+    dig +short myip.opendns.com @resolver1.opendns.com
 
 This is exposed as the value `wan_ip_address` on a (data) resource named `network_info`.
 
