@@ -8,12 +8,12 @@ import (
 	"os/exec"
 )
 
-func resolveIpAddress() (err error, ip_address string) {
-	stdout_bytes, err := exec.Command("dig", "+short", "myip.opendns.com", "@resolver1.opendns.com").Output()
+func resolveIPAddress() (ipAddress string, err error) {
+	stdoutBytes, err := exec.Command("dig", "+short", "myip.opendns.com", "@resolver1.opendns.com").Output()
 	if err != nil {
 		return
 	}
-	ip_address = string(bytes.TrimSpace(stdout_bytes))
+	ipAddress = string(bytes.TrimSpace(stdoutBytes))
 	return
 }
 
@@ -30,13 +30,13 @@ func resource() *schema.Resource {
 }
 
 func resourceRead(d *schema.ResourceData, meta interface{}) error {
-	err, ip_address := resolveIpAddress()
+	ipAddress, err := resolveIPAddress()
 	if err != nil {
 		return err
 	}
 	// you must set the Id; otherwise other resources can't access anything set in this method
 	d.SetId("_network_info")
-	d.Set("wan_ip_address", ip_address)
+	d.Set("wan_ip_address", ipAddress)
 	return nil
 }
 
