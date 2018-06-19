@@ -21,7 +21,7 @@ func resource() *schema.Resource {
 	return &schema.Resource{
 		Read: resourceRead,
 		Schema: map[string]*schema.Schema{
-			"wan_ip_address": &schema.Schema{
+			"wan_ip_address": {
 				Type:     schema.TypeString,
 				Computed: true,
 			},
