@@ -15,6 +15,17 @@ func resolveIPAddress() (ipAddress string, err error) {
 	return
 }
 
+func resourceRead(d *schema.ResourceData, meta interface{}) error {
+	ipAddress, err := resolveIPAddress()
+	if err != nil {
+		return err
+	}
+	// you must set the Id; otherwise other resources can't access anything set in this method
+	d.SetId("_network_info")
+	d.Set("wan_ip_address", ipAddress)
+	return nil
+}
+
 func resource() *schema.Resource {
 	return &schema.Resource{
 		Read: resourceRead,
@@ -25,17 +36,6 @@ func resource() *schema.Resource {
 			},
 		},
 	}
-}
-
-func resourceRead(d *schema.ResourceData, meta interface{}) error {
-	ipAddress, err := resolveIPAddress()
-	if err != nil {
-		return err
-	}
-	// you must set the Id; otherwise other resources can't access anything set in this method
-	d.SetId("_network_info")
-	d.Set("wan_ip_address", ipAddress)
-	return nil
 }
 
 func Provider() *schema.Provider {
