@@ -31,8 +31,9 @@ func resource() *schema.Resource {
 		Read: resourceRead,
 		Schema: map[string]*schema.Schema{
 			"wan_ip_address": {
-				Type:     schema.TypeString,
-				Computed: true,
+				Type:        schema.TypeString,
+				Description: "IP Address of calling machine as seen on the current wide area network (WAN)",
+				Computed:    true,
 			},
 		},
 	}
