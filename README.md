@@ -81,16 +81,17 @@ The solution is to reinstall, by using `go get` with the `-u` flag:
 
 ### References
 
-References for writing custom providers
-
-- <https://www.hashicorp.com/blog/terraform-custom-providers.html>
-  * From the official Terraform blog, but it's out of date (written on September 26, 2014) and a lot of it doesn't work with current API
-  * The horrendous code block formatting and coloring suggests no one at Terraform has read or tended to that page in quite some time
-- <http://container-solutions.com/write-terraform-provider-part-1/>
-  * A more modern (December 1, 2015) full example; not as much explanation or depth as the previous, but it works better
-  * Full code at <https://github.com/ContainerSolutions/terraform-provider-template>
-- <https://godoc.org/github.com/hashicorp/terraform/helper/schema>
-  * godoc for the main provider-writing helper module
+- [Writing Custom Providers](https://www.terraform.io/docs/extend/writing-custom-providers.html) (2018-04-12)
+  * Official documentation.
+  * Features comprehensive example describing best practices and suggested code layout.
+- [Writing Custom Terraform Providers](https://www.hashicorp.com/blog/writing-custom-terraform-providers) (2014-09-26)
+  * Out of date (a lot of it doesn't work with the current API) and stylistically neglected.
+  * > This guide exists for historical purposes ...
+- [Write your own Terraform provider: Part 1](http://container-solutions.com/write-terraform-provider-part-1/) (2015-12-01)
+  * Third-party perspective; not as much explanation or depth as the Hashicorp documentation.
+  * As far as I can tell, there is no Part 2.
+  * [Full source code](https://github.com/ContainerSolutions/terraform-provider-template)
+- [GoDoc for `helper/schema` package](https://godoc.org/github.com/hashicorp/terraform/helper/schema)
 
 
 ### License
