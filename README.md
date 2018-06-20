@@ -9,7 +9,7 @@ This is exposed as the value `wan_ip_address` on a (data) resource named `networ
 (Terraform doesn't have a concept of singletons, but a data resource is closer to a singleton than a normal resource.)
 
 
-## Install
+### Install
 
 First, use `go` to fetch and build:
 
@@ -25,7 +25,7 @@ Where the value of `network` is an absolute path to the `terraform-provider-netw
 Assuming you have the `GOPATH` environment variable set, this will be the value of `$GOPATH/bin/terraform-provider-network`.
 
 
-## Example
+### Example
 
     # "local" can be anything you want
     data "network_info" "local" { }
@@ -44,7 +44,7 @@ Assuming you have the `GOPATH` environment variable set, this will be the value 
     }
 
 
-## Debugging
+### Debugging
 
 If you get the cryptic error message:
 
@@ -58,7 +58,7 @@ The solution is to reinstall, by using `go get` with the `-u` flag:
     go get -u github.com/chbrown/terraform-provider-network
 
 
-## References
+### References
 
 References for writing custom providers
 
@@ -72,6 +72,6 @@ References for writing custom providers
   * godoc for the main provider-writing helper module
 
 
-## License
+### License
 
 Copyright © 2016 Christopher Brown. [MIT Licensed](https://chbrown.github.io/licenses/MIT/#2016).
