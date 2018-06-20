@@ -1,12 +1,52 @@
-## terraform provider for network information
+## Terraform Provider Plugin for network information
 
-Right now it just provides your IP address by shelling out to `dig` and using OpenDNS's resolvers to echo back your IP by requesting the `A` record for the special name `myip.opendns.com`, exactly like:
+This [Terraform](https://www.terraform.io/) [Provider Plugin](https://www.terraform.io/docs/extend/plugin-types.html#providers) resolves your public IP address via DNS or HTTP,
+and makes it available for interpolation elsewhere in your Terraform configuration as a [Data Source](https://www.terraform.io/docs/configuration/data-sources.html) named `network_info`,
+which exposes a single attribute, `wan_ip_address` (a string).
+
+
+### Example
+
+```HCL
+# "local" can be anything you want
+data "network_info" "local" { }
+
+resource "aws_security_group" "cluster_sg" {
+  // ...
+
+  ingress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["${data.network_info.local.wan_ip_address}/32"]
+  }
+
+  description = "Group to allow all traffic from current location"
+}
+```
+
+When unconfigured, as above, `network_info` will call the DNS resolver.
+This uses [OpenDNS](https://www.opendns.com/)'s resolvers to echo back your IP by requesting the `A` record for the special name `myip.opendns.com`, exactly like:
 
     dig +short myip.opendns.com @resolver1.opendns.com
 
-This is exposed as the value `wan_ip_address` on a (data) resource named `network_info`.
+Alternatively, you can select the HTTP resolver, which sends a plain `GET` request via HTTP to [`https://checkip.amazonaws.com`](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/authorizing-access-to-an-instance.html#authorizing-access-prereqs):
 
-(Terraform doesn't have a concept of singletons, but a data resource is closer to a singleton than a normal resource.)
+```HCL
+data "network_info" "local" {
+  dns = false
+}
+```
+
+Finally, you can explicitly specify a URL (which should return a quad-dotted IPv4 address somewhere in the response when sent a `GET` request):
+
+```HCL
+data "network_info" "local" {
+  http = "http://whatismyip.akamai.com"
+}
+```
+
+The DNS resolver is not user-configurable.
 
 
 ### Install
@@ -23,25 +63,6 @@ Then edit your `~/.terraformrc` to contain:
 
 Where the value of `network` is an absolute path to the `terraform-provider-network` binary that `go get` just built.
 Assuming you have the `GOPATH` environment variable set, this will be the value of `$GOPATH/bin/terraform-provider-network`.
-
-
-### Example
-
-    # "local" can be anything you want
-    data "network_info" "local" { }
-
-    resource "aws_security_group" "cluster_sg" {
-      ...
-
-      ingress {
-        from_port = 0
-        to_port = 0
-        protocol = "-1"
-        cidr_blocks = ["${data.network_info.local.wan_ip_address}/32"]
-      }
-
-      description = "Group to allow all traffic from current location"
-    }
 
 
 ### Debugging
